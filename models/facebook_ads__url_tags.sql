@@ -1,4 +1,9 @@
-{{ config(enabled=var('ad_reporting__facebook_ads_enabled', True)) }}
+{{ config(enabled=var('ad_reporting__facebook_ads_enabled', True),
+    unique_key = ['source_relation','_fivetran_id','key','type'],
+    partition_by={
+      "field": "_fivetran_id"
+    }
+    ) }}
 
 with base as (
 
