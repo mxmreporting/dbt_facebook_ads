@@ -59,10 +59,10 @@ select
        account.created_at,
        account.currency,
        account.timezone_name,
-	   sum(account.clicks) as clicks,
+       sum(account.clicks) as clicks,
        sum(account.impressions) as impressions,
        sum(account.spend) as spend,
-       SUM(conversion.value) as conversions
+       sum(conversion.value) as conversions
 
          FROM joined account
          LEFT JOIN {{ ref('stg_facebook_ads__conversion_data') }} conv_data
