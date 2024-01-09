@@ -83,5 +83,30 @@ joined as (
     {{ dbt_utils.group_by(13) }}
 )
 
-select *
-from joined
+select 
+        ad_sets.source_relation,
+        ad_sets.date_day,
+        ad_sets.account_id,
+        ad_sets.account_name,
+        ad_sets.campaign_id,
+        ad_sets.campaign_name,
+        ad_sets.ad_set_id,
+        ad_sets.ad_set_name,
+        ad_sets.start_at,
+        ad_sets.end_at,
+        ad_sets.bid_strategy,
+        ad_sets.daily_budget,
+        ad_sets.budget_remaining,
+        sum(ad_sets.clicks) as clicks,
+        sum(ad_sets.impressions) as impressions,
+        sum(ad_sets.spend) as spend,
+        SUM(conversion.value) as conversions
+
+        FROM joined  ad_sets
+        LEFT JOIN {{ ref('stg_facebook_ads__conversion_data') }} conv_data
+        ON ad_sets.account_id = conv_data.account_id  and ad_sets.campaign_id=conv_data.campaign_id 
+        and ad_sets.ad_set_id=conv_data.adset_id
+        and ad_sets.date_day= conv_data.date 
+        LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
+        ON conv_data.ad_id= conversion.ad_id  and conv_data.date=conversion.date
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
