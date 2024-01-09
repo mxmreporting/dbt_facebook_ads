@@ -48,3 +48,25 @@ joined as (
 
 select *
 from joined
+
+select 
+       account.source_relation,
+       account.date_day,
+       account.acc.account_id,
+       account.acc.account_name,
+       account.account_status,
+       account.business_country_code,
+       account.created_at,
+       account.currency,
+       account.timezone_name,
+	   sum(account.clicks) as clicks,
+       sum(account.impressions) as impressions,
+       sum(account.spend) as spend,
+       SUM(conversion.value) as conversions
+
+         FROM joined account
+         LEFT JOIN {{ ref('stg_facebook_ads__conversion_data') }} conv_data
+         ON account.account_id = conv_data.account_id and account.date_day= conv_data.date
+        LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
+        ON conv_data.ad_id= conversion.ad_id  and conv_data.date=conversion.date
+GROUP BY 1,2,3,4,5,6,7,8,9
