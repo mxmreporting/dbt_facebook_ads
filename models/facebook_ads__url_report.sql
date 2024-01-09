@@ -105,6 +105,7 @@ joined as (
     {{ dbt_utils.group_by(20) }}
 )
 
+-- addition for conversion data
 select 
     url.source_relation,
     url.date_day,
