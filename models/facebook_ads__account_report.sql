@@ -46,7 +46,7 @@ joined as (
     {{ dbt_utils.group_by(9) }}
 )
 
-
+-- addition for conversion data
 select 
        joined.source_relation,
        joined.date_day,
