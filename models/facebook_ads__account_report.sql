@@ -46,8 +46,6 @@ joined as (
     {{ dbt_utils.group_by(9) }}
 )
 
-select *
-from joined
 
 select 
        account.source_relation,
