@@ -105,5 +105,35 @@ joined as (
     {{ dbt_utils.group_by(20) }}
 )
 
-select *
-from joined
+select 
+    url.source_relation,
+    url.date_day,
+    url.account_id,
+    url.account_name,
+    url.campaign_id,
+    url.campaign_name,
+    url.ad_set_id,
+    url.ad_set_name,
+    url.ad_id,
+    url.ad_name,
+    url.creative_id,
+    url.creative_name,
+    url.base_url,
+    url.url_host,
+    url.url_path,
+    url.utm_source,
+    url.utm_medium,
+    url.utm_campaign,
+    url.utm_content,
+    url.utm_term,
+    sum(url.clicks) as clicks,
+    sum(url.impressions) as impressions,
+    sum(url.spend) as spend,
+    SUM(conversion.value) as conversions
+
+    FROM joined url
+    LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
+    ON url.ad_id= CAST(conversion.ad_id As INT) and url.date_day=conversion.date
+    GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+
+
