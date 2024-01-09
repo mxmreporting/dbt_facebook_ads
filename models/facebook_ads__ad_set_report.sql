@@ -83,6 +83,7 @@ joined as (
     {{ dbt_utils.group_by(13) }}
 )
 
+-- addition for conversion data
 select 
         ad_sets.source_relation,
         ad_sets.date_day,
