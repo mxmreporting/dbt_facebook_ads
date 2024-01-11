@@ -91,9 +91,9 @@ select
 	ads.ad_set_name,
 	ads.ad_id,
 	ads.ad_name,
-        sum(ads.clicks) as clicks,
-        sum(ads.impressions) as impressions,
-        sum(ads.spend) as spend,
+        ads.clicks,
+       	ads.impressions,
+       	ads.spend,
         SUM(conversion.value) as conversions
 
          FROM joined ads
