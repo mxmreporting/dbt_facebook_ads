@@ -127,14 +127,14 @@ select
     url.utm_campaign,
     url.utm_content,
     url.utm_term,
-    sum(url.clicks) as clicks,
-    sum(url.impressions) as impressions,
-    sum(url.spend) as spend,
+    url.clicks,
+    url.impressions,
+    url.spend,
     SUM(conversion.value) as conversions
 
     FROM joined url
     LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
     ON url.ad_id= CAST(conversion.ad_id As INT) and url.date_day=conversion.date
-    GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+    GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 
 
