@@ -99,4 +99,4 @@ select
          FROM joined ads
          LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
         ON ads.ad_id= CAST(conversion.ad_id As INT) and ads.date_day=conversion.date
-GROUP BY 1,2,3,4,5,6,7,8,9,10
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
