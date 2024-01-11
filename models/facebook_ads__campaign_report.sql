@@ -86,9 +86,9 @@ select
         campaign.daily_budget,
         campaign.lifetime_budget,
         campaign.budget_remaining,
-        sum(campaign.clicks) as clicks,
-        sum(campaign.impressions) as impressions,
-        sum(campaign.spend) as spend,
+        campaign.clicks,
+        campaign.impressions,
+        campaign.spend,
         SUM(conversion.value) as conversions
 
          FROM joined  campaign
@@ -97,4 +97,4 @@ select
          and campaign.date_day= conv_data.date 
         LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
         ON conv_data.ad_id= conversion.ad_id  and conv_data.date=conversion.date
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
