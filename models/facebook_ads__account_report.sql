@@ -57,9 +57,9 @@ select
        joined.created_at,
        joined.currency,
        joined.timezone_name,
-       sum(joined.clicks) as clicks,
-       sum(joined.impressions) as impressions,
-       sum(joined.spend) as spend,
+       joined.clicks,
+       joined.impressions,
+       joined.spend,
        sum(conversion.value) as conversions
 
          FROM joined 
@@ -67,4 +67,4 @@ select
          ON joined.account_id = conv_data.account_id and joined.date_day= conv_data.date
         LEFT JOIN  {{ ref('stg_facebook_ads__conversion_data_conversions') }} conversion
         ON conv_data.ad_id= conversion.ad_id  and conv_data.date=conversion.date
-GROUP BY 1,2,3,4,5,6,7,8,9
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
